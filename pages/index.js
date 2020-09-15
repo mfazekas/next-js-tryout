@@ -1,20 +1,31 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-export default function Home() {
+export default function Home({url: { query }}) {
+  const router = useRouter()
+  console.log(router.query);
+  console.log("RAW QUery", query);
+
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Create Next App ok {query["title"]}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to ok <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className="description">
-          Get started by editing <code>pages/index.js</code>
+          Get started by editing ok ok {query["title"]} <code>pages/index.js</code>
+        </p>
+
+        <p>
+          <pre>
+            {JSON.stringify(query)}
+          </pre>
         </p>
 
         <div className="grid">
