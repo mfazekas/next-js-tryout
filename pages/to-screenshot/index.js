@@ -1,32 +1,15 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import fetch from 'next/dist/compiled/node-fetch'
 
+import dynamic from 'next/dynamic';
 
-async function fetchScreenshot() {
-  
+const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
+  ssr: false
+});
 
-  const req = {
-    //navigate to our automation test page
-    url:"https://next-js-tryout.vercel.app/to-screenshot",
-    //outputs a jpeg.  Note the value of the Label in the screenshot
-    renderType:"jpeg",
-    //request will pause until the DOMReady event, then click the button which changes the label
-    // ready-to-screenshot
-    overseerScript:'page.setViewport({width: 400, height: 300}); await page.waitForNavigation({waitUntil:"domcontentloaded"}); await page.waitForSelector("#ready-to-screenshot");',
-  }
-
-  const res = await fetch(`https://phantomjscloud.com/api/browser/v2/a-demo-key-with-low-quota-per-ip-address/?request=${encodeURIComponent(JSON.stringify(req))}`)
-  const data = await res.json()
-  console.log("Got data", data);
-
-  return data;
-
-}
 
 export async function getServerSideProps(context) {
   let {query} = context;
-  await fetchScreenshot();
   return {
     props: {
       foot: "woah",
@@ -50,7 +33,7 @@ export default function Home({url: { query }}) {
 
       <main>
         <h1 className="title">
-          Welcome to ok <a href="https://nextjs.org">Next.js!</a>
+          Take screenshot from this page!
         </h1>
 
         <p className="description">
@@ -62,36 +45,10 @@ export default function Home({url: { query }}) {
             {JSON.stringify(query)}
           </pre>
         </p>
+        <div className="w-10 h-10 border border-red-500">
 
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/zeit/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
         </div>
+        <MapWithNoSSR />
       </main>
 
       <footer>
