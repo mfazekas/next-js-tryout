@@ -22,6 +22,7 @@ export default function Home({url: { query }}) {
       <Head>
         <title>Create Next App ok {query["title"]}</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:description" content={`An description - ${query["title"]}`} key="title" />
       </Head>
 
       <main>
