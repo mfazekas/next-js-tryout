@@ -1,6 +1,17 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+
+export async function getServerSideProps(context) {
+  let {query} = context;
+  return {
+    props: {
+      foot: "woah",
+      url: {query: {foo: "bar", asd: "bas", title: `foo123 ${query['t']}`}}
+    }, // will be passed to the page component as props
+  }
+}
+
 export default function Home({url: { query }}) {
   const router = useRouter()
   console.log(router.query);
