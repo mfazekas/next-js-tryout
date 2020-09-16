@@ -7,7 +7,8 @@ mapboxgl.accessToken =
 export default
 class Map extends React.Component {
   state = {
-    loaded: false
+    loaded: false,
+    third: false
   }
   componentDidMount() {
     let center = [140, 30];
@@ -38,14 +39,20 @@ class Map extends React.Component {
       console.log("=> Loaded")
       this.setState({loaded: true})
     })
+
+    setTimeout(() => {
+      this.setState({third: true})
+    }, 2000)
   }
   render() {
-    let {loaded} = this.state;
+    let {loaded, third} = this.state;
     return (<div>
       This will be a mapbox map
       <div ref={el => (this.mapContainer = el)} class="relative w-full h-full">
 
       </div>
+      <div id="second">Second</div>
+      {third && <div id="third">Third</div>}
       {loaded && <div id="ready-to-screenshot">Loaded</div>}
     </div>);
   }

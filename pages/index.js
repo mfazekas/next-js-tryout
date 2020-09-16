@@ -10,13 +10,23 @@ async function fetchScreenshot() {
     //navigate to our automation test page
     url:"https://next-js-tryout.vercel.app/to-screenshot",
     //outputs a jpeg.  Note the value of the Label in the screenshot
-    renderType:"jpeg",
+    //renderType:"jpeg",
+    renderType:"automation",
     //request will pause until the DOMReady event, then click the button which changes the label
     // ready-to-screenshot
-    overseerScript:'page.setViewport({width: 400, height: 300}); await page.waitForNavigation({waitUntil:"domcontentloaded"}); await page.waitForSelector("#ready-to-screenshot");',
+    overseerScript:'page.setViewport({width: 400, height: 300}); page.meta.log("zero") ; await page.waitForNavigation({waitUntil:"domcontentloaded"}); page.meta.log("first") ; await page.waitForDelay(30000); page.meta.log("second") ; await page.waitForSelector("div#ready-to-screenshot") ; await page.waitForSelector("#ready-to-screenshot"); page.meta.log("third") ; await page.waitForDelay(30000);',
   }
 
-  const res = await fetch(`https://phantomjscloud.com/api/browser/v2/a-demo-key-with-low-quota-per-ip-address/?request=${encodeURIComponent(JSON.stringify(req))}`)
+  let request = `https://phantomjscloud.com/api/browser/v2/a-demo-key-with-low-quota-per-ip-address/?request=${encodeURIComponent(JSON.stringify(req))}`
+  console.log("Request", request)
+
+
+///
+/// https://phantomjscloud.com/api/browser/v2/ak-xckn1-433j2-z0w1c-atfw4-20vhh/?request=%7B%22url%22%3A%22https%3A%2F%2Fnext-js-tryout.vercel.app%2Fto-screenshot%22%2C%22renderType%22%3A%22automation%22%2C%22overseerScript%22%3A%22page.setViewport(%7Bwidth%3A%20400%2C%20height%3A%20300%7D)%3B%20await%20page.waitForNavigation(%7BwaitUntil%3A%5C%22domcontentloaded%5C%22%7D)%3B%20await%20page.waitForDelay(50000)%3B%20await%20page.waitForSelector(%5C%22%23ready-to-screenshot%5C%22)%3B%20await%20page.waitForDelay(30000)%3B%22%7D
+///
+/// https://phantomjscloud.com/api/browser/v2/ak-xckn1-433j2-z0w1c-atfw4-20vhh/?request=%7B%22url%22%3A%22https%3A%2F%2Fnext-js-tryout.vercel.app%2Fto-screenshot%22%2C%22renderType%22%3A%22automation%22%2C%22overseerScript%22%3A%22page.setViewport(%7Bwidth%3A%20400%2C%20height%3A%20300%7D)%3B%20page.meta.log(%5C%22zero%5C%22)%20%3B%20await%20page.waitForNavigation(%7BwaitUntil%3A%5C%22domcontentloaded%5C%22%7D)%3B%20page.meta.log(%5C%22first%5C%22)%20%3B%20await%20page.waitForDelay(30000)%3B%20page.meta.log(%5C%22second%5C%22)%20%3B%20await%20page.waitForSelector(%5C%22%23ready-to-screenshot%5C%22)%3B%20page.meta.log(%5C%22third%5C%22)%20%3B%20await%20page.waitForDelay(30000)%3B%22%7D
+
+  const res = await fetch(request)
   const data = await res.json()
   console.log("Got data", data);
 

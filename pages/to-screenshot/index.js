@@ -48,6 +48,7 @@ export default function Home({url: { query }}) {
         <div className="w-10 h-10 border border-red-500">
 
         </div>
+        <div id="initial">Initial</div>
         <MapWithNoSSR />
       </main>
 
