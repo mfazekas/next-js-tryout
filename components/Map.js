@@ -46,7 +46,7 @@ class Map extends React.Component {
       <div ref={el => (this.mapContainer = el)} class="relative w-full h-full">
 
       </div>
-      {loaded && <div id="ready-to-screenshot" />}
+      {loaded && <div id="ready-to-screenshot">Loaded</div>}
     </div>);
   }
 }
