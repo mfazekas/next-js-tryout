@@ -54,6 +54,7 @@ class Map extends React.Component {
       <div id="second">Second</div>
       {third && <div id="third">Third</div>}
       {loaded && <div id="ready-to-screenshot">Loaded</div>}
+      {loaded && <div id="done">Done</div>}
     </div>);
   }
 }
