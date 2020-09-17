@@ -37,7 +37,8 @@ export default function Home({url: { query }, meta}) {
         <meta property="og:title" content={meta["title"]} key="title" />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:description" content={`title - ${meta['title']}`} key="twdescription" />
-        
+        <meta property="og:image:width" content={500} />
+        <meta property="og:image:height" content={800} />
       </Head>
 
       <main>
