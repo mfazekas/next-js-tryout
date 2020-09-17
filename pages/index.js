@@ -15,7 +15,8 @@ export async function getServerSideProps(context) {
       foot: "woah",
       url: {query: {foo: "bar", asd: "bas", title: `foo123 ${query['t']}`}},
       meta: {
-        image: `https://iurr7i1kb4.execute-api.us-east-1.amazonaws.com/dev/image.jpg?url=${encodeURI(uriToCapture)}`
+        image: `https://iurr7i1kb4.execute-api.us-east-1.amazonaws.com/dev/image.jpg?url=${encodeURI(uriToCapture)}`,
+        title: `T:${query['t']}`
       },
     }, // will be passed to the page component as props
   }
@@ -31,10 +32,12 @@ export default function Home({url: { query }, meta}) {
       <Head>
         <title>Create Next App ok {query["title"]}</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:description" content={`An description - ${query["title"]}`} key="title" />
+        <meta property="og:description" content={`An description - ${query["title"]}`} key="description" />
         <meta property="og:image" content={meta['image']} key="image" />
+        <meta property="og:title" content={meta["title"]} key="title" />
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:description" content={`title - ${meta['title']}`} />
+        <meta property="twitter:description" content={`title - ${meta['title']}`} key="twdescription" />
+        
       </Head>
 
       <main>
