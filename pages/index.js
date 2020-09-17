@@ -33,6 +33,8 @@ export default function Home({url: { query }, meta}) {
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:description" content={`An description - ${query["title"]}`} key="title" />
         <meta property="og:image" content={meta['image']} key="image" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:description" content={`title - ${meta['title']}`} />
       </Head>
 
       <main>
