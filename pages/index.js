@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import fetch from 'next/dist/compiled/node-fetch'
+import getPrefetchUrl from '../utils/get-prefetch-url'
 import { useState } from 'react';
 
 export async function getServerSideProps(context) {
@@ -59,6 +60,11 @@ export default function Home({url: { query }, meta}) {
           <button class="rounded bg-yellow-400 p-3 my-1" onClick={(e) => {
             console.log("Share pressed");
             fetch(`${window.location.protocol}//${window.location.host}/shared/prepare?t=${encodeURIComponent(title)}&h=${coords}`)
+            
+            let url = getPrefetchUrl({t: title, h: coords});
+            console.log("=> required", url);
+            fetch(url);
+
             //router.push(`/shared?t=${encodeURIComponent(title)}&h=${coords}`)
             setShared(true)
           }}>Share</button>
