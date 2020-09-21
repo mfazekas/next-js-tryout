@@ -2,8 +2,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import fetch from 'next/dist/compiled/node-fetch'
 
-
-
 export async function getServerSideProps(context) {
   let {query} = context;
 
