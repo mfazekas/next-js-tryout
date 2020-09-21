@@ -11,7 +11,7 @@ class Map extends React.Component {
     third: false
   }
   componentDidMount() {
-    let center = [140, 30];
+    let center = this.props.center || [140, 30];
     let zoom = 1;
 
     var map = new mapboxgl.Map({

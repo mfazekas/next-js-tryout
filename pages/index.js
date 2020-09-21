@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import fetch from 'next/dist/compiled/node-fetch'
+import { useState } from 'react';
 
 export async function getServerSideProps(context) {
   let {query} = context;
@@ -13,7 +14,7 @@ export async function getServerSideProps(context) {
       foot: "woah",
       url: {query: {foo: "bar", asd: "bas", title: `foo123 ${query['t']}`}},
       meta: {
-        image: `https://iurr7i1kb4.execute-api.us-east-1.amazonaws.com/dev/image.jpg?url=${encodeURI(uriToCapture)}`,
+        image: `https://69o4qrgoeh.execute-api.us-east-1.amazonaws.com/dev/image.jpg?key=preview_t_${qt}_h_${qh}&wait=yes&url=${encodeURI(uriToCapture)}`,
         title: `T:${query['t']}`
       },
     }, // will be passed to the page component as props
@@ -24,6 +25,10 @@ export default function Home({url: { query }, meta}) {
   const router = useRouter()
   console.log(router.query);
   console.log("RAW QUery", query);
+
+  const [title, setTitle] = useState("hello")
+  const [coords, setCoords] = useState(130)
+  const [share, setShared] = useState(false)
 
   return (
     <div className="container">
@@ -44,45 +49,24 @@ export default function Home({url: { query }, meta}) {
           Welcome to ok <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <p className="description">
-          Get started by editing ok ok {query["title"]} <code>pages/index.js</code>
-        </p>
-
-        <p>
-          <pre>
-            {JSON.stringify(query)}
-          </pre>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/zeit/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div>
+          <div class="flex flex-row my-1">
+            <div class="w-16">Title:</div><input value={title} onChange={(e) => { setTitle(e.target.value); setShared(false) }} />
+          </div>
+          <div class="flex flex-row my-1">
+            <div class="w-16">Coords:</div><input value={coords} onChange={(e) => { setCoords(e.target.value); setShared(false) }} />
+          </div>
+          <button class="rounded bg-yellow-400 p-3 my-1" onClick={(e) => {
+            console.log("Share pressed");
+            fetch(`${window.location.protocol}//${window.location.host}/shared/prepare?t=${encodeURIComponent(title)}&h=${coords}`)
+            //router.push(`/shared?t=${encodeURIComponent(title)}&h=${coords}`)
+            setShared(true)
+          }}>Share</button>
         </div>
+
+        {share && <div class="border rounded">
+            <div>URL:</div><div>{`${window.location.protocol}//${window.location.host}/shared?t=${encodeURIComponent(title)}&h=${coords}`}</div>
+          </div>}
       </main>
 
       <footer>
