@@ -1,14 +1,21 @@
 
 import fetch from 'next/dist/compiled/node-fetch'
+import https from 'next/dist/compiled/https';
+
+import getPrefetchUrl from '../../../utils/get-prefetch-url'
 
 export async function getServerSideProps(context) {
   let {query} = context;
   let {t, h} = query;
 
-  let uriToCapture = 'https://next-js-tryout.vercel.app/shared/preview?t=${t}&h={h}';
-  let url = `https://69o4qrgoeh.execute-api.us-west-1.amazonaws.com/dev/image.jpg?key=preview_t_${t}_h_${h}&url=${encodeURI(uriToCapture)}`;
-  console.log("URL", url);
-  fetch(url)
+  let uri = getPrefetchUrl({t, h});
+  console.log("Prefetch URL on server side:", url);
+
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  fetch(url, { agent: httpsAgent })
   return {
     props: {t: t, h: h}
   }
